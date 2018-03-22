@@ -12,27 +12,33 @@ using Services;
 using mSystem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using static Services.IdentityServices;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace LoginTemp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ServiceProvider provider;
+        #region controller constructor
+        private readonly ServiceProvider IidentityProvider;
         private readonly CoreContext db;
         public HomeController(CoreContext _db)
         {
-            this.provider = new ServiceCollection()
-                                .AddScoped<IDBAction<DBRepo>, DBService<DBRepo>>()
-                                .AddScoped<CoreContext>()
-                                .AddDbContext<CoreContext>(options => options.UseSqlServer(SysBase.testConn1))
+            this.IidentityProvider = new ServiceCollection()
+                                .AddScoped<IIdentityAction, IdentityService>()
                                 .BuildServiceProvider();
             this.db = _db;
         }
+        #endregion
+
         [Authorize]
         public IActionResult Index()
         {
-            var x = this.db.UserAccount.Select(o => o).ToList();
-            return View();
+            //取得使用者Identity Claims Value
+            var GetUserAccount = this.IidentityProvider.GetService<IIdentityAction>().GetClaim(this.User.Identity);
+            
+            return View(GetUserAccount);
         }
 
 

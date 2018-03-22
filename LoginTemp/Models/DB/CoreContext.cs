@@ -1,13 +1,12 @@
 ﻿using System;
+using DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services;
 
-namespace DB
-{
-    public partial class CoreContext : DbContext
-    {
+public partial class CoreContext : DbContext    {
         public virtual DbSet<UserAccount> UserAccount { get; set; }
 
         public CoreContext(DbContextOptions<CoreContext> options) 
@@ -36,4 +35,4 @@ namespace DB
             });
         }
     }
-}
+

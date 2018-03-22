@@ -1,1 +1,9 @@
-﻿
+﻿@model SortedList<string,string>
+
+
+@{ 
+    foreach (var item in Model)
+    {
+        <p>@item.Key：@item.Value</p>
+    }
+}

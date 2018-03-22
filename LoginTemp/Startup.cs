@@ -26,7 +26,7 @@ namespace LoginTemp
         {
             #region DB Setting。
             services.AddDbContext<CoreContext>(options =>
-                  options.UseSqlServer(Configuration.GetConnectionString("HomeDB")));
+                  options.UseSqlServer(Configuration.GetConnectionString("DB")));
             #endregion
             #region System Cookie Setting
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
